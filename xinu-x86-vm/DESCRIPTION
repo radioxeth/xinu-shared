@@ -1,0 +1,5 @@
+November 21st, 2011, Cheng Cheng
+Initial version:
+This tarball includes the basic verison of Xinu running on
+VMware Workstation. It has the core part of the kernel, the TTY driver and
+SHELL environment.
