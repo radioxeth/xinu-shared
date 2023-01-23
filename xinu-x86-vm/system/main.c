@@ -1,23 +1,33 @@
-/*  main.c  - main */
-
+/* main.c - main*/
 #include <xinu.h>
-#include <stdio.h>
 
-int main(int argc, char **argv)
+void sndA(void), sndB(void);
+
+/* 
+main - create and run two processes
+sndA which continuously prints the character A
+sndB which continuously prints the character B
+ */
+void main(void)
 {
-	uint32 retval;
+  resume(create(sndA,1024,40,"sndA",0));
+  resume(create(sndB,1024,20,"sndB",0));
+};
 
-	resume(create(shell, 8192, 50, "shell", 1, CONSOLE));
-
-	/* Wait for shell to exit and recreate it */
-
-	recvclr();
-	while (TRUE) {
-		retval = receive();
-		kprintf("\n\n\rMain process recreating shell\n\n\r");
-		resume(create(shell, 4096, 1, "shell", 1, CONSOLE));
+/*
+sndA - continuously prints the character A
+*/
+void sndA(void){
+	while(1){
+		putc(CONSOLE,'A');
 	}
-	while (1);
+};
 
-	return OK;
-}
+/*
+sndB - continuously prints the character B
+*/
+void sndB(void){
+	while(1){
+		putc(CONSOLE,'B');
+	}
+};
