@@ -45,3 +45,4 @@ pid32	dequeue(qid16);
 status	insert(pid32, qid16, int);
 status	insertd(pid32, qid16, int);
 qid16	newqueue(void);
+status  printqueuetab(void);
