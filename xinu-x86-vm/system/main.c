@@ -14,9 +14,6 @@ main - create and run processes, print the queuetab
  */
 
 
-// sid32 sem1, sem2;
-
-
 void main(void)
 {
 	// Part 1
@@ -37,11 +34,15 @@ void main(void)
 	
 };
 
+
+/*
+signaler - loops and increments the for counter by the increment amount, signals the increment amount
+*/
 void signaler(
 	sid32    sem
 ){
 	int i;
-	int inc=waitcount;
+	int inc = waitcount;
 	for(i=1;i<=n;i+=inc){
 		printf("signal\n",i);
 		signaln(sem, increment);
@@ -51,6 +52,9 @@ void signaler(
 	}
 }
 
+/*
+waiter - loops and waits the semaphore
+*/
 void waiter(
 	sid32    sem
 ){
@@ -62,12 +66,8 @@ void waiter(
 }
 
 
-
-
-
-
 /*
-sndA - continuously prints the character A
+sndA - prints A and then continuously loops
 */
 void sndA(void){
 	printf("A\n");
@@ -77,7 +77,7 @@ void sndA(void){
 };
 
 /*
-sndB - continuously prints the character B
+sndB - prints B and then continuously loops
 */
 void sndB(void){
 	printf("B\n");
