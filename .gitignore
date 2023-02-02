@@ -1,2 +1,4 @@
 xinu-x86-vm/compile/vn
 *.o
+xinu-x86-vm/lib/libxc/libxc.a
+xinu-x86-vm/compile/xinu
