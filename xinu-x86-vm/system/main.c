@@ -3,10 +3,10 @@
 #include <stdio.h>
 
 void sndA(void), sndB(void);
-void waiter(sid32), signaler(sid32);
+void waiter(sid32, sid32), signaler(sid32, sid32);
 
-int n = 200;
-int waitcount = 20;
+int n = 2000;
+int waitcount = 21;
 int increment = 5;
 
 /* 
@@ -26,11 +26,11 @@ void main(void)
 	// resume(create(printqueuetab,1024,20,"print queue",0));
 
 	// Part 2
-	sid32 sem;
-	sem = semcreate(waitcount);
-	
-	resume(create(waiter, 1024, 40, "waiter", 1, sem));
-	resume(create(signaler, 1024, 20, "signaler", 1, sem));
+	sid32 semw,sems;
+	semw = semcreate(0);
+	sems = semcreate(waitcount);
+	resume(create(waiter, 1024, 20, "waiter", 2, semw, sems));
+	resume(create(signaler, 1024, 20, "signaler", 2, semw, sems));
 	
 };
 
@@ -39,14 +39,16 @@ void main(void)
 signaler - loops and increments the for counter by the increment amount, signals the increment amount
 */
 void signaler(
-	sid32    sem
+	sid32    semw,
+	sid32    sems
 ){
 	int i;
 	int inc = waitcount;
 	for(i=1;i<=n;i+=inc){
+		wait(semw);
 		printf("signal\n",i);
-		signaln(sem, increment);
-		if(i==waitcount+1){
+		signaln(sems, increment);
+		if(i == waitcount+1){
 			inc = increment;
 		}
 	}
@@ -56,14 +58,50 @@ void signaler(
 waiter - loops and waits the semaphore
 */
 void waiter(
-	sid32    sem
+	sid32    semw,
+	sid32    sems
 ){
 	int i;
+	int signalcount = waitcount;
 	for(i=1;i<=n;i++){
+		wait(sems);
 		printf("%d ",i);
-		wait(sem);
+		if(i == signalcount || i==n){
+			signalcount += increment;
+			signal(semw);
+		}
 	}
 }
+
+// /*
+// signaler - loops and increments the for counter by the increment amount, signals the increment amount
+// */
+// void signaler(
+// 	sid32    sem
+// ){
+// 	int i;
+// 	int inc = waitcount;
+// 	for(i=1;i<=n;i+=inc){
+// 		printf("signal\n",i);
+// 		signaln(sem, increment);
+// 		if(i==waitcount+1){
+// 			inc = increment;
+// 		}
+// 	}
+// }
+
+// /*
+// waiter - loops and waits the semaphore
+// */
+// void waiter(
+// 	sid32    sem
+// ){
+// 	int i;
+// 	for(i=1;i<=n;i++){
+// 		printf("%d ",i);
+// 		wait(sem);
+// 	}
+// }
 
 
 /*
