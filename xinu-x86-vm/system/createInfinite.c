@@ -10,5 +10,5 @@ pid32 createInfinite(
 }
 
 void infinite(void){
-    // while(TRUE);
+    while(TRUE);
 }

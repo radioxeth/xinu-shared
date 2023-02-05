@@ -21,7 +21,7 @@ shellcmd xsh_create(int nargs, char *args[]){
         priority = 20;
     }
     if(nargs==2){
-
+        // char* to int taken from xsh_kill
         chptr = args[1];
         ch = *chptr++;
         priority = 0;
