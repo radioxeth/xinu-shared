@@ -36,7 +36,7 @@ shellcmd xsh_create(int nargs, char *args[]){
         }
         
     }
-    kprintf("\nCreating process with priority %d\n", priority);
+    // kprintf("\nCreating process with priority %d\n", priority);
     pid = createInfinite(priority);
     kprintf("\npid: %d\n",pid);
     resume(pid);
