@@ -8,7 +8,7 @@ int32 n = 0; /* Variable n has inital value zero */
 /*-------------------------------------------------------------------
 * main - Producer and Consumer processes synchronized with semaphores
 *--------------------------------------------------------------------
-*/
+*/ 
 void main(void)
 {
 sid32 produced, consumed;
