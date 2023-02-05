@@ -39,11 +39,11 @@ int32 i;
 */
 void cons2(sid32 consumed, sid32 produced)
 {
-int32 i;
-for(i=1; i<=2000; i++)
-{
-	wait(produced);
-	printf("n is %d \n", n);
-	signal(consumed);
+	int32 i;
+	for(i=1; i<=2000; i++)
+	{
+		wait(produced);
+		printf("n is %d \n", n);
+		signal(consumed);
+	}
 }
-
