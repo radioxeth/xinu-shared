@@ -10,8 +10,10 @@ xsh_create - shell command to create a new process with a specific priority
 
 shellcmd xsh_create(int nargs, char *args[])
 {
+     char inp;
      int num, modulo;
-     num = args[1];
+     inp = args[1];
+     num = (int)(inp);
      modulo = num % 2;
 
      if (modulo == 0)
