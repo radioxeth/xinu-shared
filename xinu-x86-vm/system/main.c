@@ -4,6 +4,7 @@
 void prod2(sid32, sid32), cons2(sid32, sid32);
 
 int32 n = 0; /* Variable n has inital value zero */
+int buffer[15]; // global array to act as buffer
 
 /*-------------------------------------------------------------------
 * main - Producer and Consumer processes synchronized with semaphores
