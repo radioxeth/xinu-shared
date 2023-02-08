@@ -322,4 +322,4 @@ extern	void	xdone(void);
 extern	syscall	yield(void);
 
 /* in file createInfinite.c */
-extern pid32 createInfinite(pri16);
+extern void createInfinite(pri16);
