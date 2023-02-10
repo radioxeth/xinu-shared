@@ -17,8 +17,8 @@ void main(void)
 	sem = semcreate(14);
 
 	sid32 produced, consumed;
-	consumed = semcreate(15);
-	produced = semcreate(0);
+	consumed = semcreate(14);
+	produced = semcreate(1);
 	resume( create(cons2, 1024, 20, "cons", 2, consumed, produced) );
 	resume( create(prod2, 1024, 20, "prod", 2, consumed, produced) );
 }
@@ -49,7 +49,7 @@ void cons2(sid32 consumed, sid32 produced)
 	for(i=15; i>0; i--)
 	{
 		wait(produced);
-		printf("Buffer space %d = %d \n",i, buffer[i-1]);
+		printf("Buffer space %d = %d \n",i, buffer[i]);
 		signal(consumed);
 	}
 }
