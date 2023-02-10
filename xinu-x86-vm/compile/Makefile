@@ -54,7 +54,7 @@ SYSTEM_SFILES =								\
 SYSTEM_CFILES =								\
 	ascdate.c	bufinit.c	chprio.c	panic.c		\
 	clkinit.c	close.c		conf.c		control.c	\
-	create.c	freebuf.c	freemem.c	getbuf.c	\
+	freebuf.c	freemem.c	getbuf.c	\
 	getc.c		getdev.c	getitem.c	getmem.c	\
 	getpid.c	getprio.c 	getstk.c	initialize.c 	\
 	i386.c		insert.c	insertd.c	ioerr.c		\
