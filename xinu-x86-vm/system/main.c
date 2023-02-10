@@ -17,7 +17,7 @@ void main(void)
 	sem = semcreate(14);
 
 	sid32 produced, consumed;
-	consumed = semcreate(14);
+	consumed = semcreate(15);
 	produced = semcreate(0);
 	resume( create(cons2, 1024, 20, "cons", 2, consumed, produced) );
 	resume( create(prod2, 1024, 20, "prod", 2, consumed, produced) );
