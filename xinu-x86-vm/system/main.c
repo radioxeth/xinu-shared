@@ -11,11 +11,8 @@ int buffer[15]; // global array to act as buffer
 */ 
 void main(void)
 {
-	// Initiate the semaphore to 14 (size of the buffer -1)
-	sem = semcreate(14);
-
 	sid32 produced, consumed;
-	consumed = semcreate(14);
+	consumed = semcreate(15);
 	produced = semcreate(0);
 	resume( create(cons2, 1024, 20, "cons", 2, consumed, produced) );
 	resume( create(prod2, 1024, 20, "prod", 2, consumed, produced) );
@@ -28,11 +25,26 @@ void main(void)
 void prod2(sid32 consumed, sid32 produced)
 {
 	int32 i;
-	for(i=1; i<15; i++)
+	for(i=1; i<=16; i++)
 	{
 		wait(consumed);
-		buffer[i-1] = i;
+		buffer[i-1] = i;		
 		signal(produced);
+	}
+}
+
+/*-------------------------------------------------------------------------
+* cons2 - wait for buffer to be full (sem = -1) then print buffer
+*---------------------------------------------------------------------------
+*/
+void cons2(sid32 consumed, sid32 produced)
+{
+	int32 i;
+	for(i=15; i>0; i--)
+	{
+		wait(produced);
+		printf("Buffer space %d = %d \n",i, buffer[i-1]);
+		signal(consumed);
 	}
 }
 
