@@ -29,7 +29,7 @@ void main(void)
 */
 void prod2(sid32 consumed, sid32 produced)
 {
-int32 i;
+	int32 i;
 	for(i=1; i<=15; i++)
 	{
 		wait(consumed);
@@ -49,7 +49,7 @@ void cons2(sid32 consumed, sid32 produced)
 	for(i=15; i>0; i--)
 	{
 		wait(produced);
-		printf("Buffer space 1 = %d \n", buffer[i-1]);
+		printf("Buffer space %d = %d \n",i, buffer[i-1]);
 		signal(consumed);
 	}
 }
