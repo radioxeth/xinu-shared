@@ -3,8 +3,6 @@
 #include <xinu.h>
 void prod2(sid32, sid32), cons2(sid32, sid32);
 
-sid32 sem;
-int32 n = 0; /* Variable n has inital value zero */
 int buffer[15]; // global array to act as buffer
 
 /*-------------------------------------------------------------------
@@ -18,7 +16,7 @@ void main(void)
 
 	sid32 produced, consumed;
 	consumed = semcreate(14);
-	produced = semcreate(1);
+	produced = semcreate(0);
 	resume( create(cons2, 1024, 20, "cons", 2, consumed, produced) );
 	resume( create(prod2, 1024, 20, "prod", 2, consumed, produced) );
 }
@@ -30,11 +28,10 @@ void main(void)
 void prod2(sid32 consumed, sid32 produced)
 {
 	int32 i;
-	for(i=1; i<=15; i++)
+	for(i=1; i<15; i++)
 	{
 		wait(consumed);
 		buffer[i-1] = i;
-		n++;
 		signal(produced);
 	}
 }
@@ -49,7 +46,7 @@ void cons2(sid32 consumed, sid32 produced)
 	for(i=15; i>0; i--)
 	{
 		wait(produced);
-		printf("Buffer space %d = %d \n",i, buffer[i]);
+		printf("Buffer space %d = %d \n",i, buffer[i-1]);
 		signal(consumed);
 	}
 }
