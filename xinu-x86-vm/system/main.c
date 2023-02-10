@@ -36,7 +36,7 @@ void producer(int* buffer, sid32 sem)
 	{
 		bidx = (i-1) % BUFFER_SIZE;
 		buffer[bidx] = i;
-		if(bidx==BUFFER_SIZE-1) {
+		if(bidx==BUFFER_SIZE-1 || i==count) {
 			signal(sem);
 		}
 	}
@@ -49,11 +49,14 @@ void producer(int* buffer, sid32 sem)
 */
 void consumer(int* buffer, sid32 sem)
 {
-	int32 i;
+	int32 i, c;
+	c = 0;
 	while(TRUE) {
 		wait(sem);
-		for(i=BUFFER_SIZE-1; i>=0; i--){
-			kprintf("buffer[%d]=%d\n", i, buffer[i]);
+		for(i=0; i<BUFFER_SIZE; i++){
+			if(++c<=count){
+				kprintf("buffer[%d]=%d\n", i, buffer[i]);
+			}
 		}
 	}
 }
