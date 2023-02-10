@@ -1,23 +1,59 @@
-/*  main.c  - main */
-
 #include <xinu.h>
 #include <stdio.h>
 
-int main(int argc, char **argv)
+void producer(int*, sid32), consumer(int*, sid32);
+pid32 cpid, ppid;
+int BUFFER_SIZE = 15;
+int count = 200;
+/*-------------------------------------------------------------------
+* main - Producer and Consumer processes synchronized with semaphores
+*--------------------------------------------------------------------
+*/
+void main(void)
 {
-	uint32 retval;
+	int buffer[BUFFER_SIZE-1];
+	sid32 sem;
+	sem = semcreate(0);
+	
+	cpid = create(consumer, 1024, 40, "cons", 3, buffer, sem);
+	ppid = create(producer, 1024, 20, "prod", 3, buffer, sem);
+	
+	resume(cpid);
+	resume(ppid);
+	
+}
 
-	resume(create(shell, 8192, 50, "shell", 1, CONSOLE));
 
-	/* Wait for shell to exit and recreate it */
-
-	recvclr();
-	while (TRUE) {
-		retval = receive();
-		kprintf("\n\n\rMain process recreating shell\n\n\r");
-		resume(create(shell, 4096, 1, "shell", 1, CONSOLE));
+/*-------------------------------------------------------------------------
+* prod2 - Increment n 2000 times, waiting for it to be consumed
+*---------------------------------------------------------------------------
+*/
+void producer(int* buffer, sid32 sem)
+{
+	int32 i, bidx;
+	bidx = 0;
+	for(i=1; i<=count; i++)
+	{
+		bidx = (i-1) % BUFFER_SIZE;
+		buffer[bidx] = i;
+		if(bidx==BUFFER_SIZE-1) {
+			signal(sem);
+		}
 	}
-	while (1);
+	kill(cpid);
+}
 
-	return OK;
+/*-------------------------------------------------------------------------
+* cons2 - Print n 2000 times, waiting for it to be produced
+*---------------------------------------------------------------------------
+*/
+void consumer(int* buffer, sid32 sem)
+{
+	int32 i;
+	while(TRUE) {
+		wait(sem);
+		for(i=BUFFER_SIZE-1; i>=0; i--){
+			kprintf("buffer[%d]=%d\n", i, buffer[i]);
+		}
+	}
 }
