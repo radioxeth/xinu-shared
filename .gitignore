@@ -1,0 +1,3 @@
+*.o
+*.a
+xinu-x86-vm/compile/xinu
