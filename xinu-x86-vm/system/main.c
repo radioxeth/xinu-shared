@@ -15,8 +15,8 @@ void main(void)
 	sid32 sem;
 	sem = semcreate(0);
 	
-	cpid = create(consumer, 1024, 40, "cons", 3, buffer, sem);
-	ppid = create(producer, 1024, 20, "prod", 3, buffer, sem);
+	cpid = create(consumer, 1024, 40, "cons", 2, buffer, sem);
+	ppid = create(producer, 1024, 20, "prod", 2, buffer, sem);
 	
 	resume(cpid);
 	resume(ppid);
