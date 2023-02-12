@@ -1,3 +1,4 @@
+/*CreateInfinite.c - create and resume an infinite process with a priority.*/
 #include <xinu.h>
 
 void infinite(void);

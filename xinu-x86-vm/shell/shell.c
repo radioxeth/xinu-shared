@@ -9,6 +9,7 @@
 /************************************************************************/
 const	struct	cmdent	cmdtab[] = {
 	{"argecho",	TRUE,	xsh_argecho},
+	{"bufferprint", FALSE, xsh_bufferprint},
 	{"cat",		FALSE,	xsh_cat},
 	{"clear",	TRUE,	xsh_clear},
 	{"create",	FALSE,	xsh_create},

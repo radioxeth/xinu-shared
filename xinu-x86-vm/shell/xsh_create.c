@@ -7,7 +7,6 @@
 xsh_create - shell command to create a new process with a specific priority
 --------------------------------------------------------------------------
 */
-
 shellcmd xsh_create(int nargs, char *args[]){
     pri16 priority;           /* priority of the new process */
     if (nargs>2){
@@ -19,7 +18,8 @@ shellcmd xsh_create(int nargs, char *args[]){
         priority = atoi(args[1]);
     }
     if(priority < 0){
-        kprintf("please enter a digit priority greater than 0");
+        kprintf("please enter a digit priority greater than 0\n");
+        return 0;
     }
     createInfinite(priority);
     return 1;
