@@ -14,7 +14,7 @@ extern	shellcmd  xsh_cat	(int32, char *[]);
 extern	shellcmd  xsh_clear	(int32, char *[]);
 
 /* in file xsh_create.c */
-extern shellcmd xsh_create (pri16);
+extern shellcmd xsh_create (int32, char*[]);
 
 /* in file xsh_date.c */
 extern	shellcmd  xsh_date	(int32, char *[]);
