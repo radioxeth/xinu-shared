@@ -1,0 +1,4 @@
+*.o
+*.a
+xinu-x86-vm/compile/xinu
+xinu-x86-vm/config/config
