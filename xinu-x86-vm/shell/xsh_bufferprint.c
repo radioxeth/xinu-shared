@@ -35,7 +35,7 @@ shellcmd xsh_bufferprint(int nargs, char *args[]){
 	
 	resume(cpid);
 	resume(ppid);
-    
+    while(isbadpid(cpid==0)||isbadpid(ppid)==0){}
     return 1;
 }
 
