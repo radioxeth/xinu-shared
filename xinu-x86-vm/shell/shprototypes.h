@@ -69,3 +69,12 @@ extern	shellcmd  xsh_uptime	(int32, char *[]);
 
 /* in file xsh_help.c */
 extern	shellcmd  xsh_help	(int32, char *[]);
+
+/* in file xsh_threeps.c */
+extern	shellcmd  xsh_threeps	(int32, char *[]);
+
+/* in file xsh_resume.c */
+extern	shellcmd  xsh_resume	(int32, char *[]);
+
+/* in file xsh_suspend.c */
+extern	shellcmd  xsh_suspend	(int32, char *[]);
