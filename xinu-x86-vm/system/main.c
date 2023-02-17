@@ -1,15 +1,13 @@
 /*  main.c  - main */
 
+// Additional libraries
+#include <xinu.h>
+#include <stdio.h>
+
 /* Declare processes, functions, and semaphores globally */
-pid32 apid;
-pid32 bpid;
-sid32 alicesem;
-sid32 bobsem;
 void alice(sid32,sid32);
 void bob(sid32,sid32);
 
-#include <xinu.h>
-#include <stdio.h>
 
 // This code demonstrates a rendezvous between Alice and Bob 
 // aka Alice has to wait for Bob and vice versa 
@@ -17,8 +15,11 @@ void bob(sid32,sid32);
 int main()
 {
 	// declare local variables
-	int usernum;
-
+	int usernum = 3;
+	sid32 alicesem;
+	sid32 bobsem;	
+	uint32 retval;
+	
 	// Get user input to determine the order
 	printf("Enter your rendezvous choice: \n");
 	printf("1 ~ Alice speaks first, Bob speaks last. \n");
@@ -26,9 +27,16 @@ int main()
 	printf("3 ~ Bob speaks first, Alice speaks last.  \n");
 	printf("4 ~ Bob speaks first, Bob speaks last.  \n");
 
-	// Get the user input
-	scanf("%d", &usernum);
+	// Get the user input using the shell
+	resume(create(shell, 8192, 50, "shell", 1, CONSOLE));
 
+	// Wait for shell to exit 
+	recvclr();
+	//while (TRUE) {
+		retval = receive();
+		kprintf("\n\n\rMain process destroying shell\n\n\r");
+	//}
+	
 	// User input determines the semaphore initialization scheme
 	if (usernum == 1)
 	{
