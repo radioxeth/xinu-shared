@@ -4,7 +4,7 @@
 #include <stdio.h>
 /*
 --------------------------------------------------------------------------
-xsh_create - shell command to create a new process with a specific priority
+xsh_create - shell command to display Alice and Bob's convo
 --------------------------------------------------------------------------
 */
 shellcmd xsh_create(int nargs, char *args[]){
