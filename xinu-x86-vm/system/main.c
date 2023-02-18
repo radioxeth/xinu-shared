@@ -5,9 +5,12 @@
 #include <stdio.h>
 
 /* Declare processes, functions, and semaphores globally */
-void alice(sid32,sid32);
-void bob(sid32,sid32);
-
+void alice(void);
+void bob(void);
+sid32 alicesem;
+sid32 bobsem;
+sid32 sem1;
+sid32 sem2;
 
 // This code demonstrates a rendezvous between Alice and Bob 
 // aka Alice has to wait for Bob and vice versa 
@@ -15,9 +18,7 @@ void bob(sid32,sid32);
 int main()
 {
 	// declare local variables
-	int usernum = 3;
-	sid32 alicesem;
-	sid32 bobsem;	
+	int usernum = 4;
 	uint32 retval;
 	
 	// Get user input to determine the order
@@ -42,48 +43,62 @@ int main()
 	{
 		alicesem = semcreate(1);
 		bobsem = semcreate(0);
+		sem1 = semcreate(1);
+		sem2 = semcreate(0);		
 	}
 	else if (usernum == 2)
 	{
 		alicesem = semcreate(1);
 		bobsem = semcreate(0);
+		sem1 = semcreate(0);
+		sem2 = semcreate(1);	
 	}	
 	else if (usernum == 3)
 	{
 		alicesem = semcreate(0);
 		bobsem = semcreate(1);
+		sem1 = semcreate(0);
+		sem2 = semcreate(1);
 	}	
 	else
 	{
 		alicesem = semcreate(0);
 		bobsem = semcreate(1);
+		sem1 = semcreate(1);
+		sem2 = semcreate(0);
 	}
 
-	// Begin the two processes
-	resume( create(alice, 1024, 20, "alice", 2, alicesem, bobsem) );
-	resume( create(bob, 1024, 20, "bob", 2, alicesem, bobsem) );
+	// Begin the two processes, Alice begins first
+	resume( create(alice, 1024, 20, "alice", 2) );
+	resume( create(bob, 1024, 20, "bob", 2) );
 
 	return OK;
 }
 
 // Alice has two messages
-void alice(sid32 alicesem, sid32 bobsem)
+void alice()
 {
 	wait(alicesem);
 	printf("My first statement appears before Bob’s second statement.\n");
-	signal(bobsem);
-	wait(alicesem);
+	sleep(2);
+	signal(bobsem);		
+	wait(sem1);
+	sleep(2);	
 	printf("This is Alice’s second statement.\n");
-	signal(bobsem);	
+	sleep(2);	
+	signal(sem2);	
 }
 
 // Bob has 2 messages
-void bob(sid32 alicesem, sid32 bobsem)
+void bob()
 {
-	wait(bobsem);
+	wait(bobsem);	
 	printf("My first statement appears before Alice’s second statement.\n");
+	sleep(2);	
 	signal(alicesem);
-	wait(bobsem);
+	wait(sem2);
+	sleep(2);
 	printf("This is Bob’s second statement.\n");
-	signal(alicesem);	
+	sleep(2);
+	signal(sem1);
 }
