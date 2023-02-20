@@ -47,18 +47,18 @@ shellcmd xsh_synch(int nargs, char *args[]){
     }
 
     else if (s1==0 && s2==1) {
-        alicePrio = 40;
-        bobPrio   = 20;
-        asem = semcreate(0);
-        bsem = semcreate(1);
-    }
-    else if (s1==1 && s2==0) {
         alicePrio = 20;
         bobPrio   = 40;
         asem = semcreate(1);
         bsem = semcreate(0);
     }
-    else{
+    else if (s1==1 && s2==0) {
+        alicePrio = 40;
+        bobPrio   = 20;
+        asem = semcreate(0);
+        bsem = semcreate(1);
+    }
+    else {
         return 0;
     }
 
@@ -78,11 +78,11 @@ void alice(sid32 asem, sid32 bsem)
 {
     wait(asem);
 	printf("A1: My first statement appears before Bob's second statement.\n");
-    if(s1==s2){
+    if (s1==s2) {
         signal(bsem);
         wait(asem);
     }
-    else if(s2==0){
+    else if (s2==1) {
         signal(bsem);
     }
     printf("A2: This is Alice's second statement.\n");
@@ -94,11 +94,11 @@ void bob(sid32 asem, sid32 bsem)
 {
     wait(bsem);
 	printf("B1: My first statement appears before Alices's second statement.\n");
-    if(s1==s2){
+    if (s1==s2) {
         signal(asem);
         wait(bsem);
     }
-    else if(s2==1){
+    else if (s2==0) {
         signal(asem);
     }
     printf("B2: This is Bob's second statement.\n");
