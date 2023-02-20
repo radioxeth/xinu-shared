@@ -71,7 +71,7 @@ shellcmd xsh_synch(int nargs, char *args[]){
 }
 
 /*-------------------------------------------------------------------------
-* producer - Increment n 2000 times, filling the buffer
+* alice - Print Alice's statements depending on whose turn it is
 *---------------------------------------------------------------------------
 */
 void alice(sid32 asem, sid32 bsem)
@@ -82,14 +82,17 @@ void alice(sid32 asem, sid32 bsem)
         signal(bsem);
         wait(asem);
     }
-    else if (s2==1) {
+    else if (s2==1) { // if Bob speaks first in the second set of statements, signal Bob
         signal(bsem);
     }
     printf("A2: This is Alice's second statement.\n");
     signal(bsem);
 }
 
-/**/
+/*-------------------------------------------------------------------------
+* bob - Print Bob's statements depending on whose turn it is
+*---------------------------------------------------------------------------
+*/
 void bob(sid32 asem, sid32 bsem)
 {
     wait(bsem);
@@ -98,7 +101,7 @@ void bob(sid32 asem, sid32 bsem)
         signal(asem);
         wait(bsem);
     }
-    else if (s2==0) {
+    else if (s2==0) { // if Alice speaks first in the second set of statements, signal Alice
         signal(asem);
     }
     printf("B2: This is Bob's second statement.\n");
