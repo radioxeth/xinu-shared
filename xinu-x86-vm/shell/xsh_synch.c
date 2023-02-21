@@ -8,7 +8,6 @@ xsh_synch - shell command to run synchronization problem
 --------------------------------------------------------------------------
 */
 void alice(sid32,sid32), bob(sid32,sid32);
-pid32 apid, bpid;
 pri16 alicePrio, bobPrio;
 int s1,s2;
 
@@ -62,11 +61,8 @@ shellcmd xsh_synch(int nargs, char *args[]){
         return 0;
     }
 
-    apid = create(alice, 1024, alicePrio, "alice", 2, asem, bsem);
-	bpid = create(bob, 1024, bobPrio, "bob", 2, asem, bsem);
-	
-	resume(apid);
-	resume(bpid);
+    resume(create(alice, 1024, alicePrio, "alice", 2, asem, bsem));
+	resume(create(bob, 1024, bobPrio, "bob", 2, asem, bsem));
     return 1;
 }
 
