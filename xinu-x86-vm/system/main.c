@@ -80,12 +80,9 @@ void alice()
 {
 	wait(alicesem);
 	printf("My first statement appears before Bob’s second statement.\n");
-	sleep(2);
 	signal(bobsem);		
 	wait(sem1);
-	sleep(2);	
 	printf("This is Alice’s second statement.\n");
-	sleep(2);	
 	signal(sem2);	
 }
 
@@ -94,11 +91,8 @@ void bob()
 {
 	wait(bobsem);	
 	printf("My first statement appears before Alice’s second statement.\n");
-	sleep(2);	
 	signal(alicesem);
 	wait(sem2);
-	sleep(2);
 	printf("This is Bob’s second statement.\n");
-	sleep(2);
 	signal(sem1);
 }
