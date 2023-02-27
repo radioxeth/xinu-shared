@@ -10,6 +10,9 @@ extern	shellcmd  xsh_cat	(int32, char *[]);
 /* in file xsh_clear.c */
 extern	shellcmd  xsh_clear	(int32, char *[]);
 
+/* in file xsh_create*/
+extern  shellcmd  xsh_create (int32, char*[]);
+
 /* in file xsh_date.c */
 extern	shellcmd  xsh_date	(int32, char *[]);
 
@@ -52,8 +55,14 @@ extern	shellcmd  xsh_ping	(int32, char *[]);
 /* in file xsh_ps.c */
 extern	shellcmd  xsh_ps	(int32, char *[]);
 
+/* in file xsh_resume.c */
+extern  shellcmd  xsh_resume  (int32, char *[]);
+
 /* in file xsh_sleep.c */
 extern	shellcmd  xsh_sleep	(int32, char *[]);
+
+/* in file xsh_suspend.c */
+extern  shellcmd  xsh_suspend (int32, char*[]);
 
 /* in file xsh_udpdump.c */
 extern	shellcmd  xsh_udpdump	(int32, char *[]);
@@ -69,3 +78,6 @@ extern	shellcmd  xsh_uptime	(int32, char *[]);
 
 /* in file xsh_help.c */
 extern	shellcmd  xsh_help	(int32, char *[]);
+
+/* in file xsh_updown.c */
+extern	shellcmd  xsh_updown	(int32, char *[]);

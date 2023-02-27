@@ -11,6 +11,9 @@ const	struct	cmdent	cmdtab[] = {
 	{"argecho",	TRUE,	xsh_argecho},
 	{"cat",		FALSE,	xsh_cat},
 	{"clear",	TRUE,	xsh_clear},
+	{"create",	FALSE,	xsh_create},
+	{"resume",	FALSE,	xsh_resume},
+	{"suspend",	FALSE,	xsh_suspend},
 	{"devdump",	FALSE,	xsh_devdump},
 	{"echo",	FALSE,	xsh_echo},
 	{"exit",	TRUE,	xsh_exit},
@@ -20,8 +23,8 @@ const	struct	cmdent	cmdtab[] = {
 	{"memstat",	FALSE,	xsh_memstat},
 	{"ps",		FALSE,	xsh_ps},
 	{"sleep",	FALSE,	xsh_sleep},
+	{"updown",	FALSE,	xsh_updown},
 	{"?",		FALSE,	xsh_help}
-
 };
 
 uint32	ncmd = sizeof(cmdtab) / sizeof(struct cmdent);
