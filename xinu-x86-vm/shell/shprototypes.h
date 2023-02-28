@@ -69,3 +69,24 @@ extern	shellcmd  xsh_uptime	(int32, char *[]);
 
 /* in file xsh_help.c */
 extern	shellcmd  xsh_help	(int32, char *[]);
+
+/* in file xsh_create.c */
+extern	shellcmd  xsh_create	(int32, char *[]);
+
+/* in file xsh_createsleep.c */
+extern	shellcmd  xsh_createsleep	(int32, char *[]);
+
+/* in file xsh_psready.c */
+extern	shellcmd  xsh_psready	(int32, char *[]);
+
+/* in file xsh_wait.c */
+extern  shellcmd  xsh_wait  (int32, char *[]);
+
+/* in file xsh_signaln.c */
+extern  shellcmd  xsh_signaln  (int32, char *[]);
+
+/* in file xsh_resumen.c */
+extern  shellcmd  xsh_resumen  (int32, char *[]);
+
+/* in file xsh_createsus.c */
+extern  shellcmd  xsh_createsus  (int32, char *[]);

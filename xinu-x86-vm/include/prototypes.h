@@ -320,3 +320,5 @@ extern	void	xdone(void);
 
 /* in file yield.c */
 extern	syscall	yield(void);
+
+extern  void signaln_gsem(int n);

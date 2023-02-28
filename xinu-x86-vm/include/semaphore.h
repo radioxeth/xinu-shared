@@ -20,3 +20,5 @@ struct	sentry	{
 extern	struct	sentry semtab[];
 
 #define	isbadsem(s)	((int32)(s) < 0 || (s) >= NSEM)
+
+extern sid32 gsem;
