@@ -54,9 +54,17 @@ shellcmd xsh_synch(int nargs, char *args[])
 		sem2 = semcreate(0);
 	}
 
-	// Begin the two processes, Alice begins first
-	resume( create(alice, 1024, 20, "alice", 2) );
-	resume( create(bob, 1024, 20, "bob", 2) );
+	// Begin the two processes
+	if (usernum == 1 || usernum == 2)
+	{
+			resume( create(bob, 1024, 20, "bob", 2) );	
+			resume( create(alice, 1024, 20, "alice", 2) );
+	}
+	else
+	{
+			resume( create(alice, 1024, 20, "alice", 2) );	
+			resume( create(bob, 1024, 20, "bob", 2) );		
+	}
 
 	return OK;
 }
