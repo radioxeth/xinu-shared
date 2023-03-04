@@ -7,6 +7,7 @@ sid32 gsem;
 
 int main(int argc, char **argv)
 {
+
 	uint32 retval;
 	gsem = semcreate(0);
 	resume(create(shell, 8192, 50, "shell", 1, CONSOLE));

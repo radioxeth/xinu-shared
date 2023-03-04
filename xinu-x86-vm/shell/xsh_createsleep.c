@@ -3,8 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 
-void sleepinfinite(void);
-
+void processn(int32ps);
 /*
 --------------------------------------------------------------------------
 xsh_createsleep - shell command to create a new process with a specific priority
@@ -16,13 +15,17 @@ shellcmd xsh_createsleep(int nargs, char *args[]){
         kprintf("Create command takes [0] arguments.\n");
         return 0;
     }
-    pid = create(sleepinfinite, 1024, 20, "sleepinfinite", 0);
-    resume(pid);
-    kprintf("PID: %d\n",pid);
+    resume(create(processn, 1024, 5, "process2", 1, 2));
+	resume(create(processn, 1024, 10, "process3", 1, 3));
+	resume(create(processn, 1024, 20, "process4", 1, 4));
+    
     return 1;
 }
 
-void sleepinfinite(void){
-    sleep(10);
-    while(TRUE);
+void processn(int32 n){
+	printf("Process 2 PID: %d\n",getpid());
+    while(TRUE){
+        sleep(2);
+        kprintf("Process 2 is running\n");
+    }
 }
