@@ -14,3 +14,9 @@ struct	defer	{
 };
 
 extern	struct	defer	Defer;
+
+/* Schedule types */
+#define PRIORITY_BASED 0
+#define FIFO_BASED 1
+
+extern int32 gschedtype; /* Global variable holding the scheduler type value	*/

@@ -23,8 +23,15 @@ status	ready(
 
 	prptr = &proctab[pid];
 	prptr->prstate = PR_READY;
-	insert(pid, readylist, prptr->prprio);
-	// enqueue(pid, readylist);
+	if ( gschedtype == PRIORITY_BASED ) {
+		insert(pid, readylist, prptr->prprio); //insert for priority based
+	} else if( gschedtype == FIFO_BASED ) {
+		enqueue(pid, readylist);               //enqueue for fifo
+	} else {
+		insert(pid, readylist, prptr->prprio); // default to priority based
+	}
+	
+	
 	if (resch == RESCHED_YES) {
 		resched();
 	}
