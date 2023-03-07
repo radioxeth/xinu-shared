@@ -10,7 +10,7 @@ syscall  receive(void)
 {
 	intmask	mask;			/* saved interrupt mask		*/
 	struct	procent *prptr;		/* ptr to process' table entry	*/
-	umsg32	*msgs;			/* message to return		*/
+	umsg32	msgs1;			/* message to return		*/
 	int32 i = 0;
 
 	mask = disable();
@@ -29,10 +29,10 @@ syscall  receive(void)
 	// loop through process messages 
 	while(prptr->msg_count > 0)
 	{	
-		msgs[i] = prptr->prmsg1[i];		/* Retrieve message		*/
+		msgs1 = prptr->prmsg1[i];		/* Retrieve message		*/
 		prptr->msg_count--;	
 		i++;
-		kprintf("\nReceiver%d has received the following Message :%d from sender",currpid,msgs[i]);
+		kprintf("\nReceiver%d has received the following Message :%d from sender",currpid,msgs1);
 	}	
 
 	prptr->prhasmsg = FALSE;	/* reset message flag		*/
