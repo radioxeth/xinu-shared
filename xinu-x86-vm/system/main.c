@@ -3,14 +3,14 @@
 #include <xinu.h>
 #include <stdio.h>
 
-sid32 gsem;
-int32 gschedtype;
+sid32 gsem;             // global semaphore, not needed for lab 5.
+int32 gschedtype;       // global schedule type for the OS
 int main(int argc, char **argv)
 {
 
 	uint32 retval;
-	gsem = semcreate(0);
-	gschedtype=PRIORITY_BASED;
+	gsem = semcreate(0);         // global semaphore, not needed for lab 5.
+	gschedtype = PRIORITY_BASED; // default the schedule type to PRIORITY_BASED
 	resume(create(shell, 8192, 50, "shell", 1, CONSOLE));
 
 	/* Wait for shell to exit and recreate it */
