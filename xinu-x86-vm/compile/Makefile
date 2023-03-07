@@ -66,7 +66,8 @@ SYSTEM_CFILES =								\
 	semcreate.c	semdelete.c	semreset.c	send.c		\
 	signal.c	signaln.c	sleep.c		suspend.c	\
 	unsleep.c	userret.c	wait.c		wakeup.c	\
-	write.c		xdone.c		yield.c		evec.c
+	write.c		xdone.c		yield.c		evec.c		\
+	sendk.c
 
 SYSTEM_SFULL = ${SYSTEM_SFILES:%=../system/%}
 SYSTEM_CFULL = ${SYSTEM_CFILES:%=../system/%}
