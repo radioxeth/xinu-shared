@@ -12,6 +12,7 @@ xsh_createsleep - shell command to create a new process with a specific priority
 */
 shellcmd xsh_createsleep(int nargs, char *args[]){
     pid32 pid;                /*process id of the new process*/
+    
     if (nargs>=2){
         kprintf("Create command takes [0] arguments.\n");
         return 0;
@@ -19,6 +20,8 @@ shellcmd xsh_createsleep(int nargs, char *args[]){
     pid = create(sleepinfinite, 1024, 20, "sleepinfinite", 0);
     resume(pid);
     kprintf("PID: %d\n",pid);
+    char*psargs[]={"ps"};
+    xsh_ps(1,psargs);
     return 1;
 }
 
