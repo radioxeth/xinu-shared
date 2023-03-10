@@ -21,6 +21,7 @@
 
 #define	PNMLEN		16	/* length of process "name"		*/
 #define	NULLPROC	0	/* ID of the null process		*/
+#define NMSG 5  /* Buffer size */
 
 /* Process initialization constants */
 
@@ -39,6 +40,9 @@
 			  ((pid32)(x) >= NPROC) || \
 			  (proctab[(x)].prstate == PR_FREE))
 
+/* Inline code to check if message buffer is full */
+#define isfull(m)  ((int32)(m)>=int32(NMSG))
+
 /* Number of device descriptors a process can have open */
 
 #define NDESC		5	/* must be odd to make procent 4N bytes	*/
@@ -55,8 +59,10 @@ struct procent {		/* entry in the process table		*/
 	uint32	prsem;		/* semaphore on which process waits	*/
 	pid32	prparent;	/* id of the creating process		*/
 	umsg32	prmsg;		/* message sent to this process		*/
+	umsg32	prmsgbuff[NMSG];		/* message buffer sent to this process		*/
 	bool8	prhasmsg;	/* nonzero iff msg is valid		*/
 	int16	prdesc[NDESC];	/* device descriptors for process	*/
+	int32	msgcount;   /* count of the current messages */
 };
 
 /* Marker for the top of a process stack (used to help detect overflow)	*/
