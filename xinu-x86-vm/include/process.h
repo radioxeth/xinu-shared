@@ -21,6 +21,7 @@
 
 #define	PNMLEN		16	/* length of process "name"		*/
 #define	NULLPROC	0	/* ID of the null process		*/
+#define NMSG 5  		/* Buffer size */
 
 /* Process initialization constants */
 
@@ -45,18 +46,20 @@
 
 /* Definition of the process table (multiple of 32 bits) */
 
-struct procent {		/* entry in the process table		*/
-	uint16	prstate;	/* process state: PR_CURR, etc.		*/
-	pri16	prprio;		/* process priority			*/
-	char	*prstkptr;	/* saved stack pointer			*/
-	char	*prstkbase;	/* base of run time stack		*/
-	uint32	prstklen;	/* stack length in bytes		*/
-	char	prname[PNMLEN];	/* process name				*/
-	uint32	prsem;		/* semaphore on which process waits	*/
-	pid32	prparent;	/* id of the creating process		*/
-	umsg32	prmsg;		/* message sent to this process		*/
-	bool8	prhasmsg;	/* nonzero iff msg is valid		*/
-	int16	prdesc[NDESC];	/* device descriptors for process	*/
+struct procent {				/* entry in the process table		*/
+	uint16	prstate;			/* process state: PR_CURR, etc.		*/
+	pri16	prprio;				/* process priority			*/
+	char	*prstkptr;			/* saved stack pointer			*/
+	char	*prstkbase;			/* base of run time stack		*/
+	uint32	prstklen;			/* stack length in bytes		*/
+	char	prname[PNMLEN];		/* process name				*/
+	uint32	prsem;				/* semaphore on which process waits	*/
+	pid32	prparent;			/* id of the creating process		*/
+	umsg32	prmsg;				/* message sent to this process		*/
+	umsg32	prmsgbuff[NMSG];	/* message buffer sent to this process		*/
+	bool8	prhasmsg;			/* nonzero iff msg is valid		*/
+	int16	prdesc[NDESC];		/* device descriptors for process	*/
+	int32	msgcount;			/* count of the current messages */
 };
 
 /* Marker for the top of a process stack (used to help detect overflow)	*/
