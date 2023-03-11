@@ -15,7 +15,7 @@ void	wakeup(void)
 	}
 	
 	if ( (slnonempty = nonempty(sleepq)) == TRUE ) {
-		sltop = &queuetab[firstid(sleepq)].qkey;
+		sltop = &queuetab[firstkey(sleepq)].qkey;
 	}
 	resched();
 	return;
