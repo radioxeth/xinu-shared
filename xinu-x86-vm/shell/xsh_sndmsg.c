@@ -17,7 +17,7 @@ shellcmd xsh_sndmsg(int nargs, char *args[])
     if (nargs < 3 || nargs > 4) {
         fprintf(stderr,"use is sndmsg [pid] [msg]\n");
         return 1;
-    }else if(nargs = 4){
+    }else if(nargs == 4){
         pid=atoi(args[1]);
         msg=atoi(args[2]);
         n = atoi(args[3]);

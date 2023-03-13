@@ -21,7 +21,7 @@
 
 #define	PNMLEN		16	/* length of process "name"		*/
 #define	NULLPROC	0	/* ID of the null process		*/
-#define NMSG 5  		/* Buffer size */
+#define NMSG 1  		/* Buffer size */
 
 /* Process initialization constants */
 
@@ -66,7 +66,7 @@ struct procent {				/* entry in the process table		*/
 	uint32	prsem;				/* semaphore on which process waits	*/
 	pid32	prparent;			/* id of the creating process		*/
 	umsg32	prmsg;				/* message sent to this process		*/
-	umsg32	prmsgbuff[NMSG];	/* message buffer sent to this process		*/
+	unsigned char*    prmsgbuff;	/* message buffer sent to this process		*/
 	bool8	prhasmsg;			/* nonzero iff msg is valid		*/
 	int16	prdesc[NDESC];		/* device descriptors for process	*/
 	int32	msgcount;			/* count of the current messages */
