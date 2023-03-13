@@ -34,6 +34,16 @@
 #define	RESCHED_YES	1	/* call to ready should reschedule	*/
 #define	RESCHED_NO	0	/* call to ready should not reschedule	*/
 
+/* Encryption constants*/
+#define KAT_SUCCESS 0
+#define KAT_FILE_OPEN_ERROR -1
+#define KAT_DATA_ERROR -3
+#define KAT_CRYPTO_FAILURE -4
+
+#define MAX_FILE_NAME 256
+#define MAX_MESSAGE_LENGTH 32
+#define MAX_ASSOCIATED_DATA_LENGTH 32
+
 /* Inline code to check process ID (assumes interrupts are disabled)	*/
 
 #define	isbadpid(x)	( ((pid32)(x) < 0) || \

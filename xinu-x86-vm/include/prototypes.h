@@ -247,6 +247,9 @@ extern	syscall	send(pid32, umsg32);
 /* in file sendk.c */
 extern	syscall	sendk(pid32, umsg32);
 
+/* in file sendkcrypto.c */
+extern	syscall	sendkcrypto(pid32, umsg32);
+
 /* in file shell.c */
 extern 	process shell(did32);
 
@@ -326,3 +329,4 @@ extern	void	xdone(void);
 
 /* in file yield.c */
 extern	syscall	yield(void);
+
