@@ -53,7 +53,7 @@
 /* Number of device descriptors a process can have open */
 
 #define NDESC		5	/* must be odd to make procent 4N bytes	*/
-
+#define MSGLEN		8
 /* Definition of the process table (multiple of 32 bits) */
 
 struct procent {				/* entry in the process table		*/
@@ -66,7 +66,7 @@ struct procent {				/* entry in the process table		*/
 	uint32	prsem;				/* semaphore on which process waits	*/
 	pid32	prparent;			/* id of the creating process		*/
 	umsg32	prmsg;				/* message sent to this process		*/
-	unsigned char*    prmsgbuff;	/* message buffer sent to this process		*/
+	unsigned char *prmsgbuff;	/* message buffer sent to this process		*/
 	bool8	prhasmsg;			/* nonzero iff msg is valid		*/
 	int16	prdesc[NDESC];		/* device descriptors for process	*/
 	int32	msgcount;			/* count of the current messages */

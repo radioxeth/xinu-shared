@@ -7,29 +7,26 @@
  *------------------------------------------------------------------------
  */
 syscall	sendkcrypto(
-	  pid32		pid,		/* ID of recipient process	*/
+	  pid32		pid,	        	/* ID of recipient process	*/
 	  unsigned char*     msg		/* contents of message		*/
 	)
 {
 	intmask	mask;			/* saved interrupt mask		*/
 	struct	procent *prptr;		/* ptr to process' table entry	*/
-    // kprintf("prptr->prmsgbuff (%s)\n", msg);
+    
 	mask = disable();
 	if (isbadpid(pid)) {
 		restore(mask);
 		return SYSERR;
 	}
-
 	prptr = &proctab[pid];
-	if ((prptr->prstate == PR_FREE) || prptr->msgcount >= NMSG) {
+	if ((prptr->prstate == PR_FREE) || prptr->prhasmsg) {
 		restore(mask);
 		return SYSERR;
 	}
-
     
 	prptr->prmsgbuff = msg;		/* deliver message		*/
-    prptr->msgcount++;
-	// prptr->prhasmsg = TRUE;		/* indicate message is waiting	*/
+	prptr->prhasmsg = TRUE;		/* indicate message is waiting	*/
 
 	/* If recipient waiting or in timed-wait make it ready */
 

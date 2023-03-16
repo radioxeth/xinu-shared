@@ -206,7 +206,7 @@ extern	status	ready(pid32, bool8);
 extern	umsg32	receive(void);
 
 /* in file receivek.c */
-extern	unsigned char*	receivek(void);
+extern	unsigned char*  receivek(void);
 
 /* in file recvclr.c */
 extern	umsg32	recvclr(void);
@@ -247,8 +247,8 @@ extern	syscall	send(pid32, umsg32);
 /* in file sendk.c */
 extern	syscall	sendk(pid32, umsg32);
 
-/* in file sendkcrypto.c */
-extern	syscall	sendkcrypto(pid32, unsigned char*);
+/* in file sendcrypto.c */
+extern	syscall	sendcrypto(pid32, unsigned char*, unsigned long long);
 
 /* in file shell.c */
 extern 	process shell(did32);
