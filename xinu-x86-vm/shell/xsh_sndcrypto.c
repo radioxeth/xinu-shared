@@ -49,11 +49,23 @@ int send_encrypted_msg(pid32 pid, char *msg, int msglen){
     }
     print('m', m, mlen);
     printf(" -> ");
-    if (sendkcrypto(pid, m) == OK){
-        kprintf("OK\n");
-    } else {
-        kprintf("SYSERR\n");
+    for(i=0; i<=mlen && i<=msglen; i++) {
+        if(i==mlen||i==msglen){
+            if (sendk(pid, '\0') == OK){
+                kprintf("OK null\n");
+            } else {
+                kprintf("SYSERR null\n");
+            }
+        }else{
+            printf("m[%d]=%c\n",mi,m[i]);
+            if (sendk(pid, m[i]) == OK){
+                kprintf("OK\n");
+            } else {
+                kprintf("SYSERR\n");
+            }    
+        }
     }
+    return 1;
 }
 
 // int send_encrypted_msg(pid32 pid, char *msg, int msglen){

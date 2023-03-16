@@ -3,12 +3,12 @@
 #include <xinu.h>
 
 /*------------------------------------------------------------------------
- *  sendk  -  pass k messages to a process and start recipient if waiting
+ *  sendk  -  pass a message to a process and start recipient if waiting
  *------------------------------------------------------------------------
  */
 syscall	sendk(
 	  pid32		pid,		/* ID of recipient process	*/
-	  umsg32	msg		/* contents of message		*/
+	  unsigned char	msg		/* contents of message		*/
 	)
 {
 	intmask	mask;			/* saved interrupt mask		*/
@@ -21,14 +21,17 @@ syscall	sendk(
 	}
 
 	prptr = &proctab[pid];
-	if ((prptr->prstate == PR_FREE) || prptr->msgcount >= NMSG) {
+	if ((prptr->prstate == PR_FREE) || prptr->endptr >= (MAX_MESSAGE_LENGTH+1)) {
 		restore(mask);
 		return SYSERR;
 	}
-	prptr->prmsgbuff[prptr->msgcount] = msg;		/* deliver message		*/
-    prptr->msgcount++;
-	// prptr->prhasmsg = TRUE;		/* indicate message is waiting	*/
-
+	// if(prptr->endptr=-1 && prptr->startptr==-1)
+	prptr->endptr++;                            /* increase message count */
+	prptr->prmsgbuff[prptr->endptr] = msg;		/* deliver message		*/
+	// if(prptr->startptr > MAX_MESSAGE_LENGTH || prptr->endptr>MAX_MESSAGE_LENGTH){
+	// 	prptr->startptr = -1;
+	// 	prptr->endptr   = -1;
+	// }
 	/* If recipient waiting or in timed-wait make it ready */
 
 	if (prptr->prstate == PR_RECV) {

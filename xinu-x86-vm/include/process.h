@@ -66,10 +66,12 @@ struct procent {				/* entry in the process table		*/
 	uint32	prsem;				/* semaphore on which process waits	*/
 	pid32	prparent;			/* id of the creating process		*/
 	umsg32	prmsg;				/* message sent to this process		*/
-	unsigned char *prmsgbuff;	/* message buffer sent to this process		*/
+	unsigned char prmsgbuff[MAX_MESSAGE_LENGTH+1];	/* message buffer sent to this process		*/
 	bool8	prhasmsg;			/* nonzero iff msg is valid		*/
 	int16	prdesc[NDESC];		/* device descriptors for process	*/
 	int32	msgcount;			/* count of the current messages */
+	int32   startptr;
+	int32   endptr;
 };
 
 /* Marker for the top of a process stack (used to help detect overflow)	*/

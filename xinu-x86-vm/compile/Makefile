@@ -67,7 +67,7 @@ SYSTEM_CFILES =								\
 	signal.c	signaln.c	sleep.c		suspend.c	\
 	unsleep.c	userret.c	wait.c		wakeup.c	\
 	write.c		xdone.c		yield.c		evec.c		\
-	sendk.c		receivek.c	sendkcrypto.c
+	sendk.c		receivek.c
 
 
 SYSTEM_SFULL = ${SYSTEM_SFILES:%=../system/%}
