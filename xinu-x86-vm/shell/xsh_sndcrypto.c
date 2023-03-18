@@ -35,37 +35,61 @@ shellcmd xsh_sndcrypto(int nargs, char *args[])
         }
     }
     result=send_encrypted_msg(pid, msg, msglen);
-    kprintf("result %d\n",result);
+    kprintf("encrypted result %d\n",result);
 }
 
 int send_encrypted_msg(pid32 pid, char *msg, int msglen){
+    unsigned char n[CRYPTO_NPUBBYTES] = {0, 1, 2,  3,  4,  5,  6,  7, 8, 9, 10, 11, 12, 13, 14, 15};
+    unsigned char k[CRYPTO_KEYBYTES] = {0, 1, 2,  3,  4,  5,  6,  7, 8, 9, 10, 11, 12, 13, 14, 15};
+    unsigned char a[16] = {0, 1 ,2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     unsigned char m[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    unsigned char c[32], h[32], t[32];
+    unsigned long long alen = 8;
     unsigned long long mlen = 8;
-    int mi;
-    unsigned long long i=0;
+    unsigned long long clen = CRYPTO_ABYTES;
+    int mi,result;
+    unsigned long long i;
+    
+    i=0;
     for (mi=0;mi<msglen;mi++){
         m[i]=msg[mi];
         i++;
     }
     print('m', m, mlen);
-    printf(" -> ");
-    for(i=0; i<=mlen && i<=msglen; i++) {
-        if(i==mlen||i==msglen){
-            if (sendk(pid, '\0') == OK){
-                kprintf("OK null\n");
-            } else {
-                kprintf("SYSERR null\n");
+    printf(" -> \n");
+    result=0;
+    result |= crypto_aead_encrypt(c, &clen, m, mlen, a, alen, (void*)0, n, k);
+    print('s', c, clen);
+    printf(" -> \n");
+    for(i=0; i<=clen; i++) {
+        if(i==clen){
+            if (sendk(pid, '\0') == SYSERR){
+                kprintf("SYSERR NULL\n");
             }
+            kprintf("----END OF SEND----\n");
         }else{
-            printf("m[%d]=%c\n",mi,m[i]);
-            if (sendk(pid, m[i]) == OK){
-                kprintf("OK\n");
-            } else {
-                kprintf("SYSERR\n");
-            }    
+            if (sendk(pid, c[i]) == SYSERR){
+                kprintf("SYSERR %c\n",c[i]);
+            }
         }
     }
-    return 1;
+    // for(i=0; i<=mlen && i<=msglen; i++) {
+    //     if(i==mlen||i==msglen){
+    //         if (sendk(pid, '\0') == OK){
+    //             kprintf("OK NULL\n");
+    //         } else {
+    //             kprintf("SYSERR NULL\n");
+    //         }
+    //     }else{
+    //         printf("m[%d]=%c ",mi,m[i]);
+    //         if (sendk(pid, m[i]) == OK){
+    //             kprintf("OK\n");
+    //         } else {
+    //             kprintf("SYSERR\n");
+    //         }    
+    //     }
+    // }
+    return result;
 }
 
 // int send_encrypted_msg(pid32 pid, char *msg, int msglen){
@@ -109,4 +133,5 @@ int send_encrypted_msg(pid32 pid, char *msg, int msglen){
 //     printf("c[%d] %c ",j, (char)c[j]);
 //     }
 //     printf("\n");
+//     return 1;
 // }
