@@ -25,13 +25,8 @@ syscall	sendk(
 		restore(mask);
 		return SYSERR;
 	}
-	// if(prptr->endptr=-1 && prptr->startptr==-1)
 	prptr->endptr++;                            /* increase message count */
 	prptr->prmsgbuff[prptr->endptr] = msg;		/* deliver message		*/
-	// if(prptr->startptr > MAX_MESSAGE_LENGTH || prptr->endptr>MAX_MESSAGE_LENGTH){
-	// 	prptr->startptr = -1;
-	// 	prptr->endptr   = -1;
-	// }
 	/* If recipient waiting or in timed-wait make it ready */
 
 	if (prptr->prstate == PR_RECV) {

@@ -106,7 +106,8 @@ SHELL_CFILES +=								\
 	xsh_argecho.c	xsh_cat.c	xsh_clear.c 	xsh_uptime.c	\
 	xsh_echo.c	xsh_exit.c	xsh_devdump.c	xsh_help.c	\
 	xsh_kill.c	xsh_memdump.c	xsh_ps.c 	xsh_sleep.c 	\
-	xsh_memstat.c  	xsh_recmsg.c	xsh_sndmsg.c	xsh_sndcrypto.c
+	xsh_memstat.c  	xsh_receivecrypto.c	xsh_send.c	xsh_sendcrypto.c	\
+	xsh_demo.c
 
 SHELL_CFULL  = ${SHELL_CFILES:%=../shell/%}
 

@@ -1,13 +1,13 @@
-/* xsh_sndmsg.c - xsh_sndmsg */
+/* xsh_send.c - xsh_send */
 
 #include <xinu.h>
 #include <stdio.h>
 
 /*------------------------------------------------------------------------
- * xsh_sndmsg - send a message to a pid
+ * xsh_send - send a message to a pid
  *------------------------------------------------------------------------
  */
-shellcmd xsh_sndmsg(int nargs, char *args[])
+shellcmd xsh_send(int nargs, char *args[])
 {
     pid32 pid;
     umsg32 msg;

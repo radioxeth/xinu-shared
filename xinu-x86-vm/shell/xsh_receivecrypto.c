@@ -12,7 +12,7 @@ void receiver(void);
  * xsh_remsg - receive and print a message
  *------------------------------------------------------------------------
  */
-shellcmd xsh_recmsg(int nargs, char *args[])
+shellcmd xsh_receivecrypto(int nargs, char *args[])
 {
 
     /* Insure no arguments were passed */
@@ -51,27 +51,15 @@ void receiver(void)
             printf(" -> \n");
             result=0;
             result |= crypto_aead_decrypt(m, &mlen, (void*)0, c, clen, a, alen, n, k);
-            printf("decrypted message result (%d)\n",result);
             print('m', m, mlen);
             printf(" -> \n");
+            printf("decrypted plaintext: %s\n", m);
             mi=0;
             kprintf("----END OF REC----\n");
         } else {
             c[mi]=msg;
             mi++;
         }
-        // kprintf("PID(%d) received msg(%c)\n", pid, msg);
-        // if(msg=='\0'){
-        //     print('r', m, mi);
-        //     printf(" -> \n");
-        //     for(i=0;i<16;i++){
-        //         m[i]=0;
-        //     }
-        //     mi=0;
-        // }else{
-        //     m[mi]=msg;
-        //     mi++;    
-        // }
         
     }
 }

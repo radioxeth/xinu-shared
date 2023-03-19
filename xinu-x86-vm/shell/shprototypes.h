@@ -71,10 +71,13 @@ extern	shellcmd  xsh_uptime	(int32, char *[]);
 extern	shellcmd  xsh_help	(int32, char *[]);
 
 /* in file xsh_sndmsg.c */
-extern	shellcmd  xsh_sndmsg	(int32, char *[]);
+extern	shellcmd  xsh_send	(int32, char *[]);
 
-/* in file xsh_sndcrypto.c */
-extern	shellcmd  xsh_sndcrypto	(int32, char *[]);
+/* in file xsh_sendcrypto.c */
+extern	shellcmd  xsh_sendcrypto	(int32, char *[]);
 
-/* in file xsh_recmsg.c */
-extern	shellcmd  xsh_recmsg	(int32, char *[]);
+/* in file xsh_receivecrypto.c */
+extern	shellcmd  xsh_receivecrypto	(int32, char *[]);
+
+/* in file xsh_demo.c */
+extern  shellcmd  xsh_demo  (int32, char *[]);
