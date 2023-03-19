@@ -12,6 +12,7 @@ int32	slnempty;		/* zero if the sleep queue is empty;	*/
 int32	*sltop;			/* ptr to key in first entry of sleepq	*/
 				/*   if sleepq is not empty		*/
 uint32	preempt;		/* preemption counter			*/
+uint32  pstarvecnt; /* count of pstarve */
    
 /*------------------------------------------------------------------------
  * clkinit - initialize the clock and sleep queue at startup
@@ -37,7 +38,7 @@ void	clkinit(void)
 	slnonempty = FALSE;
 
 	clktime = 0;		/* start counting seconds		*/
-
+	kprintf("clktime %d \n",clktime);
 	/*  set to: timer 0, 16-bit counter, rate generator mode,
 		counter is binary */
 	outb(CLKCNTL, 0x34);

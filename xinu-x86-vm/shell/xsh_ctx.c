@@ -26,7 +26,7 @@ shellcmd xsh_ctx(int nargs, char *args[]){
     resume(create(p1, 1024, 20, "p1", FALSE, 0));
     resume(create(p2, 1024, 20, "p2", FALSE, 0));
     sleepms(1000);
-    resume(create(pstarve, 1024, 5, "pstarve", TRUE, 0));
+    resume(create(pstarve, 1024, 10, "pstarve1", TRUE, 0));
     return 1;
 }
 
@@ -39,8 +39,5 @@ void p2(){
 }
 
 void pstarve(void){
-    while(TRUE){
-        kprintf("pstarve ran with PID %d!\n",getpid());
-    }
-    
+    kprintf("pstarve ran with PID %d!\n",getpid());
 }

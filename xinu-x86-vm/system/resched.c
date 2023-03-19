@@ -25,12 +25,12 @@ void	resched(void)		/* assumes interrupts are disabled	*/
 
 	if (ptold->prstate == PR_CURR) {  /* process remains running */
 		
-		if (ptold->prprio > firstkey(readylist) && ptold->prreprio==FALSE) {
+		if (ptold->prprio > firstkey(readylist)) {
 			return;
 		}
-		else if(ptold->prreprio==TRUE) {
-			ptold->prprio = ptold->progprio;
-		}
+		// else if(ptold->prreprio==TRUE) {
+		// 	ptold->prprio = ptold->progprio;
+		// }
 
 		/* Old process will no longer remain current */
 
@@ -46,7 +46,7 @@ void	resched(void)		/* assumes interrupts are disabled	*/
 	preempt = QUANTUM;		/* reset time slice for process	*/
 	ctxsw(&ptold->prstkptr, &ptnew->prstkptr);
 	
-	/* check for */
+	/* check for starved processes */
 	for (pid = 0; pid < NPROC; pid++) {
 		prptr = &proctab[pid];
 		if(prptr->prstate == PR_READY && prptr->prreprio==TRUE) {
