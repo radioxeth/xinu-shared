@@ -19,9 +19,10 @@ const	struct	cmdent	cmdtab[] = {
 	{"memdump",	FALSE,	xsh_memdump},
 	{"memstat",	FALSE,	xsh_memstat},
 	{"ps",		FALSE,	xsh_ps},
+	{"psready",		FALSE,	xsh_psready},
 	{"sleep",	FALSE,	xsh_sleep},
+	{"ctx",		FALSE,	xsh_ctx},
 	{"?",		FALSE,	xsh_help}
-
 };
 
 uint32	ncmd = sizeof(cmdtab) / sizeof(struct cmdent);
@@ -253,7 +254,7 @@ process	shell (
 
 		child = create(cmdtab[j].cfunc,
 			SHELL_CMDSTK, SHELL_CMDPRIO,
-			cmdtab[j].cname, 2, ntok, &tmparg);
+			cmdtab[j].cname, FALSE, 2, ntok, &tmparg);
 
 		/* If creation or argument copy fails, report error */
 

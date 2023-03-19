@@ -11,7 +11,8 @@ void	resched(void)		/* assumes interrupts are disabled	*/
 	struct procent *ptold;	/* ptr to table entry for old process	*/
 	struct procent *ptnew;	/* ptr to table entry for new process	*/
 
-	/* If rescheduling is deferred, record attempt and return */
+	struct	procent	*prptr;		/* pointer to process		*/
+	int32	pid;			/* index into proctabl		*/
 
 	if (Defer.ndefers > 0) {
 		Defer.attempt = TRUE;
@@ -23,8 +24,12 @@ void	resched(void)		/* assumes interrupts are disabled	*/
 	ptold = &proctab[currpid];
 
 	if (ptold->prstate == PR_CURR) {  /* process remains running */
-		if (ptold->prprio > firstkey(readylist)) {
+		
+		if (ptold->prprio > firstkey(readylist) && ptold->prreprio==FALSE) {
 			return;
+		}
+		else if(ptold->prreprio==TRUE) {
+			ptold->prprio = ptold->progprio;
 		}
 
 		/* Old process will no longer remain current */
@@ -40,6 +45,19 @@ void	resched(void)		/* assumes interrupts are disabled	*/
 	ptnew->prstate = PR_CURR;
 	preempt = QUANTUM;		/* reset time slice for process	*/
 	ctxsw(&ptold->prstkptr, &ptnew->prstkptr);
+	
+	/* check for */
+	for (pid = 0; pid < NPROC; pid++) {
+		prptr = &proctab[pid];
+		if(prptr->prstate == PR_READY && prptr->prreprio==TRUE) {
+			kprintf("%3d %-16s %4d\n",
+			pid, prptr->prname, prptr->prprio);
+			prptr->prprio++;
+			getitem(pid);
+			insert(pid, readylist, prptr->prprio);
+			break;
+		}
+	}
 
 	/* Old process returns here when resumed */
 

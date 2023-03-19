@@ -15,6 +15,7 @@ pid32	create(
 	  uint32	ssize,		/* stack size in words		*/
 	  pri16		priority,	/* process priority > 0		*/
 	  char		*name,		/* name (for debugging)		*/
+	  bool8		reprio,		/* should it reprioritize 	*/
 	  uint32	nargs,		/* number of args that follow	*/
 	  ...
 	)
@@ -44,6 +45,8 @@ pid32	create(
 	/* initialize process table entry for new process */
 	prptr->prstate = PR_SUSP;	/* initial state is suspended	*/
 	prptr->prprio = priority;
+	prptr->progprio = priority; /*original priority*/
+	prptr->prreprio = reprio;
 	prptr->prstkbase = (char *)saddr;
 	prptr->prstklen = ssize;
 	prptr->prname[PNMLEN-1] = NULLCH;
