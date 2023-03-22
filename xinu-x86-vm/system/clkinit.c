@@ -5,6 +5,8 @@
 #include <clock.h>
 
 uint32	clktime;		/* seconds since boot			*/
+uint32  nowtime;        /* seconds now, reset on an interval*/
+
 uint32	ctr1000 = 0;		/* milliseconds since boot		*/
 qid16	sleepq;			/* queue of sleeping processes		*/
 int32	slnempty;		/* zero if the sleep queue is empty;	*/
@@ -38,6 +40,7 @@ void	clkinit(void)
 	slnonempty = FALSE;
 
 	clktime = 0;		/* start counting seconds		*/
+	nowtime = clktime;
 	kprintf("clktime %d \n",clktime);
 	/*  set to: timer 0, 16-bit counter, rate generator mode,
 		counter is binary */

@@ -13,20 +13,18 @@ xsh_createctx - shell command to create a new process with a specific priority
 --------------------------------------------------------------------------
 */
 shellcmd xsh_ctx(int nargs, char *args[]){
-    pri16 priority;           /* priority of the new process */
-    if (nargs!=1){
-        kprintf("Create command takes [0] argument\n");
+    if (nargs<1 || nargs>2){
+        kprintf("Create command takes [0] or [1 - reprio_type(0 or 1)] argument\n");
         return 0;
+    }else if(nargs==1){
+        reprio_type=0;
+    }else{
+        reprio_type=atoi(args[1]);
     }
-    if(priority < 0){
-        kprintf("please enter a digit priority greater than 0\n");
-        return 0;
-    }
-    priority=20;
+    printf("reprio_type (%d)\n",reprio_type);
     resume(create(p1, 1024, 20, "p1", FALSE, 0));
     resume(create(p2, 1024, 20, "p2", FALSE, 0));
-    sleepms(1000);
-    resume(create(pstarve, 1024, 10, "pstarve1", TRUE, 0));
+    resume(create(pstarve, 1024, 5, "pstarve1", TRUE, 0));
     return 1;
 }
 

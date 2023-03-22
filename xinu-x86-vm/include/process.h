@@ -65,5 +65,6 @@ struct procent {		/* entry in the process table		*/
 #define	STACKMAGIC	0x0A0AAAA9
 
 extern	struct	procent proctab[];
-extern	int32	prcount;	/* currently active processes		*/
-extern	pid32	currpid;	/* currently executing process		*/
+extern	int32	prcount;		/* currently active processes		*/
+extern	pid32	currpid;		/* currently executing process		*/
+extern  int32   reprio_type;	/* reprio type, 0 for ctx switch, 1 for timed*/

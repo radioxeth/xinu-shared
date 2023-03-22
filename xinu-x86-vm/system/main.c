@@ -3,9 +3,12 @@
 #include <xinu.h>
 #include <stdio.h>
 
+
+int32  reprio_type;
 int main(int argc, char **argv)
 {
 	uint32 retval;
+	reprio_type=0;
 
 	resume(create(shell, 8192, 50, "shell", FALSE, 1, CONSOLE));
 
@@ -17,7 +20,9 @@ int main(int argc, char **argv)
 		kprintf("\n\n\rMain process recreating shell\n\n\r");
 		resume(create(shell, 4096, 1, "shell", FALSE, 1, CONSOLE));
 	}
-	while (1);
+	while (1){
+		printf("hello\n");
+	};
 
 	return OK;
 }

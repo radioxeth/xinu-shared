@@ -6,13 +6,11 @@
  *  resched  -  Reschedule processor to highest priority eligible process
  *------------------------------------------------------------------------
  */
+ 
 void	resched(void)		/* assumes interrupts are disabled	*/
 {
 	struct procent *ptold;	/* ptr to table entry for old process	*/
 	struct procent *ptnew;	/* ptr to table entry for new process	*/
-
-	struct	procent	*prptr;		/* pointer to process		*/
-	int32	pid;			/* index into proctabl		*/
 
 	if (Defer.ndefers > 0) {
 		Defer.attempt = TRUE;
@@ -28,9 +26,6 @@ void	resched(void)		/* assumes interrupts are disabled	*/
 		if (ptold->prprio > firstkey(readylist)) {
 			return;
 		}
-		// else if(ptold->prreprio==TRUE) {
-		// 	ptold->prprio = ptold->progprio;
-		// }
 
 		/* Old process will no longer remain current */
 
@@ -47,18 +42,8 @@ void	resched(void)		/* assumes interrupts are disabled	*/
 	ctxsw(&ptold->prstkptr, &ptnew->prstkptr);
 	
 	/* check for starved processes */
-	for (pid = 0; pid < NPROC; pid++) {
-		prptr = &proctab[pid];
-		if(prptr->prstate == PR_READY && prptr->prreprio==TRUE) {
-			kprintf("%3d %-16s %4d\n",
-			pid, prptr->prname, prptr->prprio);
-			prptr->prprio++;
-			getitem(pid);
-			insert(pid, readylist, prptr->prprio);
-			break;
-		}
-	}
-
+	reprioctx();
+	
 	/* Old process returns here when resumed */
 
 	return;
